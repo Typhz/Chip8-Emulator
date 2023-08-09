@@ -25,7 +25,7 @@ class Renderer {
     } else if (y < 0) {
       y += this.rows;
     }
-    let pixelLoc = x + (y * this.cols);
+    let pixelLoc = x + y * this.cols;
     this.display[pixelLoc] ^= 1;
 
     return !this.display[pixelLoc];
@@ -33,6 +33,34 @@ class Renderer {
 
   clear() {
     this.display = new Array(this.cols * this.rows);
+  }
+
+  render() {
+    // Limpa o canvas para cada ciclo de renderização
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+
+    // Percorre o array de exibição
+    for (let i = 0; i < this.cols * this.rows; i++) {
+      // Captura a posição x do pixel baseado em `i`
+      let x = (i % this.cols) * this.scale;
+
+      // Captura a posição y do pixel baseado em `i`
+      let y = Math.floor(i / this.cols) * this.scale;
+
+      // Se o valor de this.display[i] == 1, desenha um pixel
+      if (this.display[i]) {
+        // Cor do pixel
+        this.ctx.fillStyle = "#fff";
+
+        // Coloca um pixel na posição x, y com tamanho scale x scale
+        this.ctx.fillRect(x, y, this.scale, this.scale);
+      }
+    }
+  }
+
+  testRender() {
+    this.setPixel(0, 0);
+    this.setPixel(5, 2);
   }
 }
 
