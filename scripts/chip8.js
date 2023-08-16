@@ -1,10 +1,12 @@
 import Renderer from './renderer.js';
 import Keyboard from './keyboard.js';
 import Speaker from './speaker.js';
+import CPU from './cpu.js'; // NEW
 
 const renderer = new Renderer(10);
 const keyboard = new Keyboard();
 const speaker = new Speaker();
+const cpu = new CPU(renderer, keyboard, speaker);
 
 let loop;
 
@@ -15,12 +17,16 @@ function init() {
   then = Date.now();
   startTime = then;
 
+  cpu.loadSpritesIntoMemory();
+  cpu.loadRom('pong.ch8');
+  // cpu.loadRom('pong.ch8');
+  loop = requestAnimationFrame(step);
+
   // TESTING CODE. REMOVE WHEN DONE TESTING.
-  renderer.testRender();
-  renderer.render();
+  // renderer.testRender();
+  // renderer.render();
   // END TESTING CODE
 
-  loop = requestAnimationFrame(step);
 }
 
 function step() {
@@ -28,7 +34,7 @@ function step() {
   elapsed = now - then;
 
   if (elapsed > fpsInterval) {
-      // Cycle the CPU. We'll come back to this later and fill it out.
+    cpu.cycle();
   }
 
   loop = requestAnimationFrame(step);
