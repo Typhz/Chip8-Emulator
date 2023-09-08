@@ -18,7 +18,7 @@ function init() {
   startTime = then;
 
   cpu.loadSpritesIntoMemory();
-  cpu.loadRom('pong.ch8');
+  cpu.loadRom('test.ch8');
   // cpu.loadRom('pong.ch8');
   loop = requestAnimationFrame(step);
 
