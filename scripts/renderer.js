@@ -10,6 +10,8 @@ class Renderer {
     this.canvas.width = this.cols * this.scale;
     this.canvas.height = this.rows * this.scale;
 
+    console.log(this.canvas.width, this.canvas.height);
+
     this.display = new Array(this.cols * this.rows);
   }
 

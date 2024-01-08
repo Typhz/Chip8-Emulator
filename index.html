@@ -4,12 +4,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Chip8</title>
-  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://rawcdn.githack.com/nextapps-de/winbox/0.2.82/dist/css/winbox.min.css">
+  <link rel="stylesheet" href="./src/styles/style.css">
 </head>
 <body>
-  <canvas id="emulator_screen">
-
-  </canvas>
+  <div id="emulator_configs">
+    <h2>ROM</h2>
+    <input type="file" id="rom_file" accept=".ch8">
+  </div>
+  <div id="emulator_controls">
+    <div id="controls">
+      1 2 3 4
+      Q W E R
+      A S D F
+      Z X C V
+    </div>
+  </div>
   <script type="module" src="scripts/chip8.js"></script>
+  <script src="https://rawcdn.githack.com/nextapps-de/winbox/0.2.82/dist/js/winbox.min.js"></script>
+  <script>
+    new WinBox("Screen", {
+      x: "center",
+      y: "center",
+      width: 1280,
+      height: 670,
+      html: "<canvas id='emulator_screen'></canvas>",
+      onclose: function() {
+        window.location.reload();
+      },
+    });
+
+    new WinBox("Configs", {
+      y: "center",
+      width: 300,
+      height: 800,
+      mount: document.getElementById("emulator_configs"),
+      onclose: function() {
+        window.location.reload();
+      },
+      class: ["no-full"]
+    });
+
+    new WinBox("Keyboard Layout", {
+      x: "right",
+      y: "center",
+      width: 300,
+      height: 200,
+      mount: document.getElementById("emulator_controls"),
+      onclose: function() {
+        window.location.reload();
+      },
+      class: ["no-full", "no-minimize", "no-maximize"]
+    });
+  </script>
+
 </body>
 </html>

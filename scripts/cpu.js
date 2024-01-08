@@ -52,24 +52,6 @@ class CPU {
       this.memory[0x200 + loc] = program[loc]
     }
   }
-  loadRom(romName) {
-    var request = new XMLHttpRequest();
-    var self = this;
-
-    request.onload = function () {
-      if (request.response) {
-        let program = new Uint8Array(request.response);
-
-        self.loadProgramIntoMemory(program)
-        console.log(program)
-      }
-    }
-
-    request.open('GET', 'roms/' + romName);
-    request.responseType = "arraybuffer";
-
-    request.send();
-  }
 
   cycle() {
     for (let i = 0; i < this.speed; i++) {
@@ -102,6 +84,18 @@ class CPU {
     } else{
       this.speaker.stop();
     }
+  }
+
+  reset() {
+    this.memory = new Uint8Array(4096);
+    this.v = new Uint8Array(16);
+    this.i = 0;
+    this.delayTimer = 0;
+    this.soundTimer = 0;
+    this.pc = 0x200;
+    this.stack = new Array();
+    this.paused = false;
+    this.speed = 10;
   }
 
   executeInstruction(opcode) {
